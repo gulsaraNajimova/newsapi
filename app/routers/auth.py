@@ -1,5 +1,6 @@
-from fastapi import APIRouter
-from app.schemas.auth_schema import SignUpWithPassword
+from typing import Any
+from fastapi import APIRouter, Depends
+from app.schemas.auth_schema import SignUpWithPassword, SignIn
 
 
 auth_router = APIRouter(
@@ -8,5 +9,13 @@ auth_router = APIRouter(
 )
 
 @auth_router.post("/sign-up")
-async def signup(user: SignUpWithPassword):
-    return {"User Successfully created: ": user}
+async def sign_up(user_info: Any = Depends(SignUpWithPassword)):
+    return {"User successfully created: ": user_info}
+
+@auth_router.post("/sign-in")
+async def sign_in(user_info: Any = Depends(SignIn)):
+    return {"User successfully signed in": user_info}
+
+@auth_router.get("/me")
+async def get_me():
+    pass

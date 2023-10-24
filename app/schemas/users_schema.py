@@ -5,3 +5,6 @@ class BaseUser(BaseModel):
     username: str
     is_active: bool
     is_superuser: bool
+
+class BaseUserWithPassword(BaseUser):
+    password: str
