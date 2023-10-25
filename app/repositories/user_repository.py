@@ -8,7 +8,7 @@ from app.models.users_model import UserModel
 
 class UserRepository:
     def __init__(self, 
-    session_factory: Callable[..., AbstractContextManager[Session]]):
+    session_factory: Callable[..., AbstractContextManager[Session]]) -> None:
         self.session_factory = session_factory
         self.user_model = UserModel
 
