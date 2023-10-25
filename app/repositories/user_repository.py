@@ -4,14 +4,13 @@ from sqlalchemy.orm import Session, joinedload
 from sqlalchemy.exc import IntegrityError
 
 from app.core.exceptions import DuplicatedError, NotFoundError
-
+from app.models.users_model import UserModel
 
 class UserRepository:
     def __init__(self, 
-    session_factory: Callable[..., AbstractContextManager[Session]],
-    user_model):
+    session_factory: Callable[..., AbstractContextManager[Session]]):
         self.session_factory = session_factory
-        self.user_model = user_model
+        self.user_model = UserModel
 
     def create_user(self, schema):
         with self.session_factory() as session:
