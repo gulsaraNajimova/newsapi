@@ -7,7 +7,6 @@ from app.schemas.users_schema import BaseUser
 class SignUp(BaseModel):
     email: str
     username: str
-    is_superuser: bool = False
 
 class SignUpWithPassword(SignUp):
     password: str
@@ -18,8 +17,7 @@ class SignUpWithPassword(SignUp):
             "example": {
                 "email": "sarah@gmail.com",
                 "password": "password123",
-                "username": "sarah",
-                "is_superuser": "False"
+                "username": "sarah"
             }
         }
 
