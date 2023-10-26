@@ -10,6 +10,9 @@ class UserService:
     def get_by_id(self, user_id: int):
         return self.repository.get_by_id(user_id)
     
+    def get_by_email(self, email: str):
+        return self.repository.get_by_email(email)
+    
     def get_users_list(self, skip, limit):
         return self.repository.get_users_list(skip, limit)
     
