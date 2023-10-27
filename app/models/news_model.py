@@ -13,7 +13,7 @@ class NewsModel(Base):
     published_date = Column(DateTime)
     owner_id = Column(String, ForeignKey("users.id"))
     
-    owner=relationship("UserModel", back_populates = "tasks")
+    owner=relationship("UserModel", back_populates = "news")
 
     def __repr__(self):
         return f"<Title {self.title}, url {self.url}>"

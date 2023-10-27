@@ -1,6 +1,3 @@
-
-
-
 from datetime import timedelta
 from app.core.config import configs
 from app.core.exceptions import AuthError
@@ -8,6 +5,24 @@ from app.core.security import create_token, hash_password, verify_password
 from app.models.users_model import UserModel
 from app.schemas.auth_schema import Payload, SignIn, SignUpWithPassword
 from app.services.user_service import UserService
+
+
+def return_token(user_info):
+    payload = Payload(
+            id = user_info.id,
+            email = user_info.email,
+            username = user_info.username,
+            is_superuser = user_info.is_superuser
+        )
+
+    token_lifespan = timedelta(minutes = configs.ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token, expiration_datetime = create_token(payload.model_dump(), token_lifespan)  # noqa: E501
+    result = {
+        "access_token": access_token,
+        "expiration": expiration_datetime,
+        "user_info": payload,
+        }
+    return result
 
 
 class AuthService(UserService):
@@ -19,22 +34,9 @@ class AuthService(UserService):
             username = user_info.username,
             is_active=True, 
             is_superuser=False)
-        
         created_user = self.create_user(user)
-        payload = Payload(
-            id = created_user.id,
-            email = created_user.email,
-            username = created_user.username,
-            is_superuser = created_user.is_superuser
-        )
-
-        token_lifespan = timedelta(minutes = configs.ACCESS_TOKEN_EXPIRE_MINUTES)
-        access_token, expiration_datetime = create_token(payload.model_dump(), token_lifespan)  # noqa: E501
-        sign_up_result = {
-            "access_token": access_token,
-            "expiration": expiration_datetime,
-            "user_info": user,
-        }
+        
+        sign_up_result = return_token(created_user)
         return sign_up_result
     
     
@@ -46,18 +48,6 @@ class AuthService(UserService):
             raise AuthError("Incorrect email or password")
         if not found_user.is_active:
             raise AuthError("Account is not active")
-        payload = Payload(
-            id = found_user.id,
-            email = found_user.email,
-            username = found_user.username,
-            is_superuser = found_user.is_superuser
-        )
-
-        token_lifespan = timedelta(minutes = configs.ACCESS_TOKEN_EXPIRE_MINUTES)
-        access_token, expiration_datetime = create_token(payload.model_dump(), token_lifespan)  # noqa: E501
-        sign_in_result = {
-            "access_token": access_token,
-            "expiration": expiration_datetime,
-            "user_info": found_user,
-        }
+        
+        sign_in_result = return_token(found_user)
         return sign_in_result

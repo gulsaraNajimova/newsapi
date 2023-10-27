@@ -17,6 +17,6 @@ async def search_news(params: Any = Depends(SearchNews)):
 async def get_last_5_news():
     pass
 
-@news_router.get("/search-list-today")
-async def todays_search_list_history():
+@news_router.get("/searched-news-today")
+async def todays_searched_news_history():
     pass
