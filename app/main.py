@@ -1,9 +1,12 @@
+import schedule
+import time 
 from fastapi import FastAPI
 
 from app.core.database import engine, Base
 from app.routers.auth import auth_router
 from app.routers.news import news_router
 from app.routers.users import user_router
+from app.services.news_service import NewsService
 
 app=FastAPI(
     title="News Aggregation API ",
@@ -20,3 +23,9 @@ app.include_router(auth_router)
 app.include_router(news_router)
 app.include_router(user_router)
 
+# delete all rows from news table every day at 00:00 (12 a.m.)
+schedule.every().day.at("00:00").do(NewsService.delete_news_nextday)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
