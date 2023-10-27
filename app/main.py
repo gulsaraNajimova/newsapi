@@ -23,6 +23,7 @@ app.include_router(auth_router)
 app.include_router(news_router)
 app.include_router(user_router)
 
+
 # delete all rows from news table every day at 00:00 (12 a.m.)
 schedule.every().day.at("00:00").do(NewsService.delete_news_nextday)
 
