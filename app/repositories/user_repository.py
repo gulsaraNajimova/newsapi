@@ -58,8 +58,6 @@ class UserRepository:
                 schema.hashed_password = hashed_password
 
             update_dict = schema.dict(exclude_unset=True)
-            print("Update Dictionary:", update_dict) 
-
             session.query(self.user_model).filter(self.user_model.id == user_id).update(update_dict)
             session.commit()
             return self.get_by_id(user_id)
