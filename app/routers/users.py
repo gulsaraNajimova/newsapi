@@ -19,14 +19,20 @@ user_router = APIRouter(
 @user_router.get("/", response_model=List[BaseUser])
 @inject
 async def get_users_list(skip: int =0 , limit: int = 100, current_user: UserModel = Depends(get_current_superuser), 
-    service: UserService = Depends(Provide[Container.user_service])):
+    service: UserService = Depends(Provide[Container.user_service])
+    ):
     users_list = service.get_users_list(skip, limit)
     return jsonable_encoder(users_list)
     
 
-@user_router.get("/{user_id}")
-async def get_user(user_id: int):
-    pass
+@user_router.get("/{user_id}", response_model=BaseUser)
+@inject
+async def get_user(user_id: int, 
+    current_user: UserModel = Depends(get_current_superuser),
+    service: UserService = Depends(Provide[Container.user_service])
+    ):
+    return service.get_by_id(user_id)
+    
 
 @user_router.patch("/{user_id}")
 async def update_user(user_id: int,
