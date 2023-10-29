@@ -1,6 +1,8 @@
-from typing import Any
+from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends
-from app.schemas.auth_schema import SignUpWithPassword, SignIn
+from app.core.containers import Container
+from app.schemas.auth_schema import SignUpResponse, SignUpWithPassword, SignIn
+from app.services.auth_service import AuthService
 
 
 auth_router = APIRouter(
@@ -8,12 +10,13 @@ auth_router = APIRouter(
     tags=["auth"],
 )
 
-@auth_router.post("/sign-up")
-async def sign_up(user_info: Any = Depends(SignUpWithPassword)):
-    return {"User successfully created: ": user_info}
+@auth_router.post("/sign-up", response_model=SignUpResponse)
+@inject
+async def sign_up(user_info: SignUpWithPassword, service: AuthService = Depends(Provide[Container.auth_service])):
+    return service.sign_up(user_info)
 
 @auth_router.post("/sign-in")
-async def sign_in(user_info: Any = Depends(SignIn)):
+async def sign_in(user_info: SignIn):
     return {"User successfully signed in": user_info}
 
 @auth_router.get("/me")

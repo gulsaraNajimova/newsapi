@@ -1,7 +1,7 @@
 from typing import Any
 from fastapi import APIRouter, Depends
 
-from app.schemas.users_schema import BaseUserWithPassword
+from app.schemas.users_schema import BaseUser
 
 
 user_router = APIRouter(
@@ -19,7 +19,7 @@ async def get_user(user_id: int):
 
 @user_router.patch("/{user_id}")
 async def update_user(user_id: int,
-    user_info: Any = Depends(BaseUserWithPassword)):
+    user_info: BaseUser):
     pass
 
 @user_router.delete("/{user_id}")

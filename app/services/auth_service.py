@@ -9,18 +9,18 @@ from app.services.user_service import UserService
 
 def return_token(user_info):
     payload = Payload(
-            id = user_info.id,
-            email = user_info.email,
-            username = user_info.username,
-            is_superuser = user_info.is_superuser
-        )
+        id = user_info.id,
+        email = user_info.email,
+        username = user_info.username,
+        is_superuser = user_info.is_superuser
+    )
 
     token_lifespan = timedelta(minutes = configs.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token, expiration_datetime = create_token(payload.model_dump(), token_lifespan)  # noqa: E501
     result = {
         "access_token": access_token,
         "expiration": expiration_datetime,
-        "user_info": payload,
+        "user_info": user_info,
         }
     return result
 

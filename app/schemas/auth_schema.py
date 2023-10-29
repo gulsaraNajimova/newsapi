@@ -25,13 +25,12 @@ class Payload(BaseModel):
     id: int
     email: str
     username: str
-    is_superuser: str
+    is_superuser: bool
 
 class SignUpResponse(BaseModel):
-    id: int
-    user_info: BaseUser
     access_token: str
     expiration: datetime
+    user_info: BaseUser
 
 
 class SignIn(BaseModel):

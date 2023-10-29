@@ -14,7 +14,14 @@ class UserRepository:
 
     def create_user(self, schema):
         with self.session_factory() as session:
-            query = self.user_model(**schema.dict())
+            print(vars(schema))
+            query = self.user_model(
+                email = schema.email,
+                hashed_password = schema.hashed_password,
+                username = schema.username,
+                is_active = schema.is_active,
+                is_superuser = schema.is_superuser
+            )
             try:
                 session.add(query)
                 session.commit()

@@ -27,7 +27,7 @@ def create_token(payload_data: dict, expires_delta: Optional[timedelta] = None):
     return encoded_jwt, expiration_datetime
 
 
-def hash_password(password):
+def hash_password(password: str):
     return pwd_context.hash(password)
 
 
