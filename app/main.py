@@ -1,32 +1,40 @@
-import schedule
-import time 
 from fastapi import FastAPI
 
-from app.core.database import engine, Base
+from app.core.config import configs
+from app.core.containers import Container
 from app.routers.auth import auth_router
 from app.routers.news import news_router
 from app.routers.users import user_router
-from app.services.news_service import NewsService
-
-app=FastAPI(
-    title="News Aggregation API ",
-    description="Discover the world's latest stories instantly with our News API app,\
-        delivering real-time updates on diverse topics tailored to your interests",
-    version="0.0.1",
-    openapi_url="/https://newsapi//openapi.json"
-)
-
-Base.metadata.create_all(bind=engine) #creates database tables
+from app.scheduler.jobs import scheduler
 
 
-app.include_router(auth_router)
-app.include_router(news_router)
-app.include_router(user_router)
+class AppCreator:
+    def __init__(self):
+        self.app = FastAPI(
+            title=configs.PROJECT_NAME,
+            description="Discover the world's latest stories instantly with our News API app,\
+                delivering real-time updates on diverse topics tailored to your interests",
+            openapi_url=f"{configs.API}/openapi.json",
+            version="0.0.1",
+        )
 
+        # set db and container
+        self.container = Container()
+        self.db = self.container.db()
+        # self.db.create_database()
 
-# delete all rows from news table every day at 00:00 (12 a.m.)
-schedule.every().day.at("00:00").do(NewsService.delete_news_nextday)
+        # set routes
+        @self.app.get("/")
+        def root():
+            return "service is working"
 
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+        self.app.include_router(auth_router)
+        self.app.include_router(news_router)
+        self.app.include_router(user_router)
+
+app_creator = AppCreator()
+app = app_creator.app
+db = app_creator.db
+container = app_creator.container
+
+scheduler.start()

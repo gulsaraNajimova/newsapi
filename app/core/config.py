@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 # Load environment variables from .env file
 load_dotenv()
@@ -10,7 +10,7 @@ ENV: str = ""
 class Configs(BaseSettings):
     ENV: str = os.getenv("ENV", "dev")
     API: str = "/api"
-    PROJECT_NAME: str = "news-api"
+    PROJECT_NAME: str = "News Aggregation API"
     ENV_DATABASE_MAPPER: dict = {
         "prod": "postgres",
         "stage": "postgres",
@@ -43,7 +43,7 @@ class Configs(BaseSettings):
 
     DATABASE_URI_FORMAT: str = "{db_engine}://{user}:{password}@{host}:{port}/{database}"
 
-    DATABASE_URI = DATABASE_URI_FORMAT.format(
+    DATABASE_URI: str = DATABASE_URI_FORMAT.format(
         db_engine=DB_ENGINE,
         user=DB_USER,
         password=DB_PASSWORD,

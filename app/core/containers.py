@@ -1,7 +1,7 @@
 from dependency_injector import containers, providers
 
 from app.core.config import configs
-from app.core.database import SessionLocal
+from app.core.database import Database
 from app.repositories.news_repository import NewsRepository
 from app.repositories.user_repository import UserRepository
 from app.services.auth_service import AuthService
@@ -14,13 +14,13 @@ class Container(containers.DeclarativeContainer):
         modules=[
             "app.routers.auth",
             "app.routers.news",
-            "app.routers.user",
+            "app.routers.users",
             "app.core.dependencies",
         ]
     )
 
-    db = providers.Singleton(SessionLocal, db_url=configs.DATABASE_URI)
-
+    db = providers.Singleton(Database, db_url=configs.DATABASE_URI)
+        
     news_repository = providers.Factory(NewsRepository, session_factory=db.provided.session)  # noqa: E501
     user_repository = providers.Factory(UserRepository, session_factory=db.provided.session)  # noqa: E501
     

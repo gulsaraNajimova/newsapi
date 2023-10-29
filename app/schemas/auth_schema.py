@@ -12,8 +12,8 @@ class SignUpWithPassword(SignUp):
     password: str
 
     class Config:
-        orm_mode = True
-        schema_extra={
+        from_attributes = True
+        json_schema_extra={
             "example": {
                 "email": "sarah@gmail.com",
                 "password": "password123",

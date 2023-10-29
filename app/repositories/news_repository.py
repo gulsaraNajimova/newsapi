@@ -29,8 +29,3 @@ class NewsRepository:
         with self.session_factory() as session:
             return session.query(self.news_model)\
                 .filter(self.news_model.owner_id == owner_id).all()
-
-    def delete_news_nextday(self):
-        with self.session_factory() as session:
-            session.query(self.news_model).delete()
-            session.commit()
