@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session, joinedload
 from sqlalchemy.exc import IntegrityError
 
 from app.core.exceptions import DuplicatedError, NotFoundError
+from app.core.security import hash_password
 from app.models.users_model import UserModel
 
 class UserRepository:
@@ -52,8 +53,14 @@ class UserRepository:
         
     def update_user_info(self, user_id: int, schema):
         with self.session_factory() as session:
-            session.query(self.user_model).filter(self.user_model.id == user_id)\
-                .update(schema.dict(exclude_none=True))
+            if 'hashed_password' in schema.dict(exclude_unset=True):
+                hashed_password = hash_password(schema.hashed_password)
+                schema.hashed_password = hashed_password
+
+            update_dict = schema.dict(exclude_unset=True)
+            print("Update Dictionary:", update_dict) 
+
+            session.query(self.user_model).filter(self.user_model.id == user_id).update(update_dict)
             session.commit()
             return self.get_by_id(user_id)
         
