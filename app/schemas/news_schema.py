@@ -20,5 +20,6 @@ class PriorityType(str, Enum):
 
 class SearchNews(BaseModel):
     keyword: Optional[List[str]]
+    category: Optional[str]
     country: Optional[str]
     priority: PriorityType

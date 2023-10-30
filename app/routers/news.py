@@ -1,5 +1,7 @@
 from fastapi import APIRouter
+from newsapi import NewsApiClient
 
+from app.core.config import Configs
 from app.schemas.news_schema import SearchNews
 
 
@@ -7,6 +9,8 @@ news_router = APIRouter(
     prefix="/news",
     tags=["news"],
 )
+
+newsapi = NewsApiClient(api_key=Configs.MY_NEWSAPI_KEY)
 
 @news_router.get("/search-news/")
 async def search_news(params: SearchNews):

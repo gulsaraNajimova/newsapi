@@ -52,6 +52,9 @@ class Configs(BaseSettings):
         database=ENV_DATABASE_MAPPER[ENV],
     )
 
+    # newsAPI
+    MY_NEWSAPI_KEY = os.getenv("MY_NEWSAPI_KEY", "")
+
     class Config:
         case_sensitive = True
 
