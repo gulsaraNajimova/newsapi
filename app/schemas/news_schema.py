@@ -10,12 +10,19 @@ class SortBy(str, Enum):
     published_at = "publishedAt"
     none = ""
 
-class SearchNews(BaseModel):
-    q: Optional[str] = Field(default = "", description = "Keywords to look for")
+class SearchEverything(BaseModel):
+    q: Optional[str] = Field(default = "", description = "Keywords or phrases to look for")
     sources: Optional[str] = Field(default = "", description = "Sources to look for", max_length=20)
     from_: Optional[date] = Field(default = date.today())
     to_: Optional[date] = Field(default = date.today())
     sortBy: Optional[SortBy] = Field(default = SortBy.none, description = "Possible values: relevance, popularity, publishedAt")
+
+
+class SearchTopHeadlines(BaseModel):
+    q: Optional[str] = Field(default = "", description = "Keywords or phrases to look for")
+    sources: Optional[str] = Field(default = "", description = "Sources to look for", max_length=20)
+    country: Optional[str] = Field(default = "us", description = "Write the 2-letter country code")
+    category: Optional[str] = Field(default = "", description = "Possible options: business, entertainment, general health, science, sports, technology")
 
 
 class BaseNews(BaseModel):

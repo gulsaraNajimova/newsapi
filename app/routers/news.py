@@ -1,10 +1,8 @@
 from typing import Any
 from fastapi import APIRouter, Depends
-from newsapi import NewsApiClient
 
-from app.core.config import configs
-from app.schemas.news_schema import SearchNews
-from app.utils.news import get_everything
+from app.schemas.news_schema import SearchEverything, SearchTopHeadlines
+from app.utils.news import get_everything, get_top_headlines
 
 
 news_router = APIRouter(
@@ -13,19 +11,16 @@ news_router = APIRouter(
 )
 
 @news_router.get("/get-all-news")
-async def get_all_news(params: dict = Depends(SearchNews)):
+async def get_all_news(params: Any = Depends(SearchEverything)):
     news = get_everything(params)
     return news
 
 
 @news_router.get("/get-top-headlines")
-async def get_top_headlines():
-    pass
+async def get_top_news(params: Any = Depends(SearchTopHeadlines)):
+    news = get_top_headlines(params)
+    return news
 
-
-@news_router.get("/search-news/")
-async def search_news(params: SearchNews):
-    return {"news_found": params}
 
 @news_router.get("/last-five-news")
 async def get_last_5_news():
