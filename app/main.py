@@ -5,7 +5,7 @@ from app.core.containers import Container
 from app.routers.auth import auth_router
 from app.routers.news import news_router
 from app.routers.users import user_router
-from app.scheduler.jobs import scheduler
+from app.apscheduler.jobs import scheduler
 
 
 class AppCreator:

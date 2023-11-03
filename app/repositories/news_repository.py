@@ -4,16 +4,20 @@ from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
 from app.models.news_model import NewsModel
-from app.schemas.news_schema import BaseNews
 
 class NewsRepository:
     def __init__(self, session_factory: Callable[..., AbstractContextManager[Session]]):
         self.session_factory = session_factory
         self.news_model = NewsModel
 
-    def save_to_database(self, schema: BaseNews):
+    def save_to_database(self, user_id: int, search_query: dict, title, url):
         with self.session_factory() as session:
-            query = self.news_model(**schema.model_dump())
+            query = self.news_model(
+                search_query = search_query,
+                title = title,
+                url = url,
+                owner_id = user_id
+            )
             session.add(query)
             session.commit()
             session.refresh(query)

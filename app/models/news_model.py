@@ -2,7 +2,6 @@ from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.orm import relationship
 
 from app.core.database import Base
-from app.models.users_model import UserModel
 
 
 class NewsModel(Base):

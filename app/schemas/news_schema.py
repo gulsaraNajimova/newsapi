@@ -1,4 +1,4 @@
-from datetime import datetime, date
+from datetime import date
 from enum import Enum
 from typing import Optional
 from pydantic import BaseModel, Field
@@ -24,11 +24,3 @@ class SearchTopHeadlines(BaseModel):
     country: Optional[str] = Field(default = "us", description = "Write the 2-letter country code")
     category: Optional[str] = Field(default = "", description = "Possible options: business, entertainment, general health, science, sports, technology")
 
-
-class BaseNews(BaseModel):
-    title: str
-    author: str
-    source: str
-    description: str
-    url: pydantic.AnyHttpUrl
-    publishedAt: datetime
