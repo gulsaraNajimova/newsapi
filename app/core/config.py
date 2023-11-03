@@ -53,7 +53,7 @@ class Configs(BaseSettings):
     )
 
     # newsAPI
-    MY_NEWSAPI_KEY = os.getenv("MY_NEWSAPI_KEY", "")
+    MY_NEWSAPI_KEY: str = os.getenv("MY_NEWSAPI_KEY", "")
 
     class Config:
         case_sensitive = True

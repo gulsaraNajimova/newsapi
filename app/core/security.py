@@ -23,7 +23,7 @@ def create_token(payload_data: dict, expires_delta: Optional[timedelta] = None):
         expire = datetime.utcnow() + access_token_expires
     payload = {"exp": expire, **payload_data}
     encoded_jwt = jwt.encode(payload, configs.SECRET_KEY, algorithm=ALGORITHM)
-    expiration_datetime = expire.strftime("%Y-%m-%dT%H:%M:%S")
+    expiration_datetime = expire.strftime(configs.DATETIME_FORMAT)
     return encoded_jwt, expiration_datetime
 
 
