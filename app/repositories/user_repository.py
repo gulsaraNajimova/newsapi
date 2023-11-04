@@ -54,8 +54,7 @@ class UserRepository:
     def update_user_info(self, user_id: int, schema):
         with self.session_factory() as session:
             if 'hashed_password' in schema.dict(exclude_unset=True):
-                hashed_password = hash_password(schema.hashed_password)
-                schema.hashed_password = hashed_password
+                schema.hashed_password = hash_password(schema.hashed_password)
 
             update_dict = schema.dict(exclude_unset=True)
             session.query(self.user_model).filter(self.user_model.id == user_id).update(update_dict)

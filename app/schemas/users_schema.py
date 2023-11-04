@@ -13,7 +13,7 @@ class User(BaseUser):
 
 class EditUser(BaseModel):
     email: Optional[str] = None
-    password: Optional[str] = None
+    hashed_password: Optional[str] = None
     username: Optional[str] = None
     is_active: Optional[bool] = None
     is_superuser: Optional[bool] = None

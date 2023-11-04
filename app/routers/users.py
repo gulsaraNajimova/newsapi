@@ -42,6 +42,7 @@ async def update_user_info(user_info: EditUser,
     return service.patch_user_info(current_user.id, user_info)
 
 @user_router.delete("/delete-user")
+@inject
 async def delete_user(user_id:int,
     current_user: UserModel = Depends(get_current_user),
     service: UserService = Depends(Provide[Container.auth_service])
