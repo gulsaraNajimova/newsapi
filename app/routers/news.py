@@ -1,5 +1,3 @@
-from datetime import date
-import json
 from typing import Any
 from fastapi import APIRouter, Depends
 from app.core.containers import Container
@@ -43,9 +41,16 @@ async def save_view_history(news_details: Any = Depends(SaveNews),
 
 
 @news_router.get("/last-five-news")
-async def get_last_5_news():
-    pass
+@inject
+async def get_last_5_news(current_user: UserModel = Depends(get_current_user),
+    service: NewsService = Depends(Provide[Container.news_service])):
+    
+    return service.get_last_five_news(owner_id = current_user.id)
+    
 
-@news_router.get("/searched-news-today")
-async def todays_searched_news_history():
-    pass
+@news_router.get("/view_history-today")
+@inject
+async def todays_view_history(current_user: UserModel = Depends(get_current_user),
+    service: NewsService = Depends(Provide[Container.news_service])):
+    
+    return service.get_todays_view_history(owner_id = current_user.id)

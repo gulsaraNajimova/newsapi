@@ -28,7 +28,8 @@ class NewsRepository:
                 .filter(self.news_model.owner_id == owner_id)\
                 .order_by(desc(self.news_model.id)).limit(5).all()
         
-    def get_todays_searched_list(self, owner_id: int) -> List:
+    def get_todays_view_history(self, owner_id: int) -> List:
         with self.session_factory() as session:
             return session.query(self.news_model)\
-                .filter(self.news_model.owner_id == owner_id).all()
+                .filter(self.news_model.owner_id == owner_id)\
+                .order_by(desc(self.news_model.id)).all()
