@@ -7,7 +7,7 @@ from dependency_injector.wiring import Provide, inject
 
 from app.schemas.news_schema import SaveNews, SearchEverything, SearchTopHeadlines
 from app.services.news_service import NewsService
-from app.utils.news import get_everything, get_top_headlines
+from app.services.news_service import get_everything, get_top_headlines
 
 
 news_router = APIRouter(
