@@ -2,7 +2,6 @@ from datetime import date
 from enum import Enum
 from typing import Optional
 from pydantic import BaseModel, Field
-import pydantic
 
 class SortBy(str, Enum):
     relevance = "relevance"

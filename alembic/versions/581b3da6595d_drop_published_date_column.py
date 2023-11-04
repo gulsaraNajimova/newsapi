@@ -1,8 +1,8 @@
-"""drop published_date column from news table
+"""drop published_date column
 
-Revision ID: c11492483bc9
-Revises: afa58b7a4d12
-Create Date: 2023-11-03 14:21:16.035832
+Revision ID: 581b3da6595d
+Revises: 
+Create Date: 2023-11-05 01:09:08.597952
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'c11492483bc9'
-down_revision: Union[str, None] = 'afa58b7a4d12'
+revision: str = '581b3da6595d'
+down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
