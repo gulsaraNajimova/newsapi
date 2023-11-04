@@ -23,3 +23,7 @@ class SearchTopHeadlines(BaseModel):
     country: Optional[str] = Field(default = "us", description = "Write the 2-letter country code")
     category: Optional[str] = Field(default = "", description = "Possible options: business, entertainment, general health, science, sports, technology")
 
+
+class SaveNews(BaseModel):
+    title: str
+    url: str

@@ -10,10 +10,9 @@ class NewsRepository:
         self.session_factory = session_factory
         self.news_model = NewsModel
 
-    def save_to_database(self, user_id: int, search_query: dict, title, url):
+    def save_to_database(self, user_id: int, title, url):
         with self.session_factory() as session:
             query = self.news_model(
-                search_query = search_query,
                 title = title,
                 url = url,
                 owner_id = user_id

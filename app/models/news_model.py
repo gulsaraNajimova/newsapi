@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
+from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
 from app.core.database import Base
@@ -10,7 +10,6 @@ class NewsModel(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
     url = Column(String, index=True)
-    published_date = Column(DateTime)
     owner_id = Column(Integer, ForeignKey("users.id"))
     
     owner=relationship("UserModel", back_populates = "news")
