@@ -15,7 +15,7 @@ class UserRepository:
 
     def create_user(self, schema):
         with self.session_factory() as session:
-            print(vars(schema))
+            
             query = self.user_model(
                 email = schema.email,
                 hashed_password = schema.hashed_password,
