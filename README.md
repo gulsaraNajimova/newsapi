@@ -29,8 +29,8 @@ FastAPI project for integrating NewsAPI by applying general RestAPI Aplication c
 1. Server
      1. `uvicorn app.main:app --reload`: base
      2. options
-      1. host: `--host 0.0.0.0`
-      2. port: `--port 8000`
+        1. host: `--host 0.0.0.0`
+        2. port: `--port 8000`
 2. Alembic
     1. `alembic revision -m <message>`: create a new revision of the environment
 	2. `alembic upgrade <revision #>`: run our upgrade migration to our database
@@ -38,7 +38,7 @@ FastAPI project for integrating NewsAPI by applying general RestAPI Aplication c
 
 
 
-## sample env
+### Sample env
 ```dotenv
 # postgres case
 ENV=dev
@@ -52,7 +52,7 @@ SECRET_KEY = "aabbbccccddddd"
 
 MY_NEWSAPI_KEY = "12233344445555"
 
-## references
+### References
 1. [FastAPI official docs](https://fastapi.tiangolo.com/)
 2. [alembic official tutorial](https://alembic.sqlalchemy.org/en/latest/tutorial.html)
 3. [Dependency Injector](https://python-dependency-injector.ets-labs.org/)
