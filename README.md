@@ -48,9 +48,9 @@ DB_PASSWORD=
 DB_HOST=localhost
 DB_PORT=5432
 ```
-SECRET_KEY = "aabbbccccddddd"
+SECRET_KEY = "SECRET_KEY_VALUE"
 
-MY_NEWSAPI_KEY = "12233344445555"
+MY_NEWSAPI_KEY = "MY_NEWSAPI_KEY_VALUE"
 
 ### References
 1. [FastAPI official docs](https://fastapi.tiangolo.com/)
