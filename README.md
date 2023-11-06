@@ -6,7 +6,7 @@ Description goes here
 
 ### Description
 FastAPI project for integrating NewsAPI by applying general RestAPI Aplication cases
-![openapi-docs](./doc/images/openapi-docs.png)
+![alt text](doc/image/openapi-docs.png "Swagger docs")
 
 ## Base Models
 1. user
