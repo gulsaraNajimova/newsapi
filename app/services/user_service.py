@@ -13,11 +13,11 @@ class UserService:
     def get_by_email(self, email: str):
         return self.repository.get_by_email(email)
     
-    def get_users_list(self, skip, limit):
+    def get_users_list(self, skip: int, limit: int):
         return self.repository.get_users_list(skip, limit)
     
     def patch_user_info(self, user_id: int, schema):
         return self.repository.update_user_info(user_id, schema)
     
-    def delete_user(self, user_id):
+    def delete_user(self, user_id: int):
         return self.repository.delete_user(user_id)
