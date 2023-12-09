@@ -16,3 +16,4 @@ class NewsModel(Base):
 
     def __repr__(self):
         return f"<Title {self.title}, url {self.url}>"
+

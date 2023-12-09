@@ -32,9 +32,11 @@ class AppCreator:
         self.app.include_router(news_router)
         self.app.include_router(user_router)
 
+
 app_creator = AppCreator()
 app = app_creator.app
 db = app_creator.db
 container = app_creator.container
 
 scheduler.start()
+

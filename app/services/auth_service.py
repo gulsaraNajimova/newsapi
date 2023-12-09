@@ -9,10 +9,10 @@ from app.services.user_service import UserService
 
 def return_token(user_info):
     payload = Payload(
-        id = user_info.id,
-        email = user_info.email,
-        username = user_info.username,
-        is_superuser = user_info.is_superuser
+        id=user_info.id,
+        email=user_info.email,
+        username=user_info.username,
+        is_superuser=user_info.is_superuser
     )
 
     token_lifespan = timedelta(minutes = configs.ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -29,16 +29,15 @@ class AuthService(UserService):
     def sign_up(self, user_info: SignUpWithPassword):
         get_hashed_password = hash_password(user_info.password)
         user = UserModel(
-            email = user_info.email,
-            hashed_password = get_hashed_password,
-            username = user_info.username,
+            email=user_info.email,
+            hashed_password=get_hashed_password,
+            username=user_info.username,
             is_active=True, 
             is_superuser=False)
         created_user = self.create_user(user)
         
         sign_up_result = return_token(created_user)
         return sign_up_result
-    
     
     def sign_in(self, sign_in_info: SignIn):
         found_user = self.get_by_email(sign_in_info.email)
@@ -51,3 +50,4 @@ class AuthService(UserService):
         
         sign_in_result = return_token(found_user)
         return sign_in_result
+

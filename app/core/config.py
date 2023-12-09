@@ -7,6 +7,7 @@ load_dotenv()
 
 ENV: str = ""
 
+
 class Configs(BaseSettings):
     ENV: str = os.getenv("ENV", "dev")
     API: str = "/api"

@@ -8,20 +8,19 @@ from app.core.security import hash_password
 from app.models.users_model import UserModel
 
 class UserRepository:
-    def __init__(self, 
-    session_factory: Callable[..., AbstractContextManager[Session]]) -> None:
+    def __init__(self, session_factory: Callable[..., AbstractContextManager[Session]]) -> None:
         self.session_factory = session_factory
         self.user_model = UserModel
 
     def create_user(self, schema):
         with self.session_factory() as session:
-            
+            hashed_password = hash_password(schema.hashed_password)
             query = self.user_model(
-                email = schema.email,
-                hashed_password = schema.hashed_password,
-                username = schema.username,
-                is_active = schema.is_active,
-                is_superuser = schema.is_superuser
+                email=schema.email,
+                hashed_password=hashed_password,
+                username=schema.username,
+                is_active=schema.is_active,
+                is_superuser=schema.is_superuser
             )
             try:
                 session.add(query)
@@ -30,8 +29,8 @@ class UserRepository:
             except IntegrityError as e:
                 raise DuplicatedError(str(e.orig))
             return query
-        
-    def get_by_id(self, user_id: int, eager = False):
+
+    def get_user_by_id(self, user_id: int, eager):
         with self.session_factory() as session:
             query = session.query(self.user_model)
             if eager:
@@ -39,18 +38,17 @@ class UserRepository:
                     query = query.options(joinedload(getattr(self.user_model, eager)))
             query = query.filter(self.user_model.id == user_id).first()
             if not query:
-                raise NotFoundError(f"ID not found: {user_id}")
+                raise NotFoundError(detail="User Not Found")
             return query
         
     def get_by_email(self, email: str):
         with self.session_factory() as session:
-            return session.query(self.user_model).filter(self.user_model.email==email).first()  # noqa: E501
+            return session.query(self.user_model).filter(self.user_model.email == email).first()  # noqa: E501
         
     def get_users_list(self, skip: int, limit: int):
         with self.session_factory() as session:
             return session.query(self.user_model).offset(skip).limit(limit).all()
 
-        
     def update_user_info(self, user_id: int, schema):
         with self.session_factory() as session:
             if 'hashed_password' in schema.dict(exclude_unset=True):

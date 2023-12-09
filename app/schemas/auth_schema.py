@@ -8,6 +8,7 @@ class SignUp(BaseModel):
     email: str
     username: str
 
+
 class SignUpWithPassword(SignUp):
     password: str
 
@@ -21,11 +22,13 @@ class SignUpWithPassword(SignUp):
             }
         }
 
+
 class Payload(BaseModel):
     id: int
     email: str
     username: str
     is_superuser: bool
+
 
 class SignUpResponse(BaseModel):
     access_token: str
@@ -37,7 +40,7 @@ class SignIn(BaseModel):
     email: str
     password: str
 
-class SignInResponse(SignUpResponse):
-    ... 
 
+class SignInResponse(SignUpResponse):
+    ...
 

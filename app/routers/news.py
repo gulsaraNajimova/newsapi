@@ -5,15 +5,16 @@ from app.core.dependencies import get_current_user
 from app.models.users_model import UserModel
 from dependency_injector.wiring import Provide, inject
 
+from app.newsapi.get_news import get_everything, get_top_headlines
 from app.schemas.news_schema import SaveNews, SearchEverything, SearchTopHeadlines
 from app.services.news_service import NewsService
-from app.services.news_service import get_everything, get_top_headlines
 
 
 news_router = APIRouter(
     prefix="/news",
     tags=["news"],
 )
+
 
 @news_router.get("/get-all-news")
 async def get_all_news(params: Any = Depends(SearchEverything),

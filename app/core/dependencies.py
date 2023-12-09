@@ -40,3 +40,4 @@ def get_current_superuser(current_user: UserModel = Depends(get_current_user)) -
     if not current_user.is_superuser:
         raise AuthError("It's not a super user")
     return current_user
+
