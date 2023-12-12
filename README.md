@@ -17,7 +17,6 @@ FastAPI project for integrating NewsAPI by applying general RestAPI Aplication c
 3. Database
    1. Postgresql
    2. Migration with alembic
-   3. Load with two ways (eager, lazy)
 4. dependency-injector
    1. service-repository pattern
 5. JWT authentication
