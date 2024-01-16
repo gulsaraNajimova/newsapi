@@ -1,0 +1,44 @@
+version: "1"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: newsapi-app
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      MY_NEWSAPI_KEY: ${MY_NEWSAPI_KEY}
+      DB: ${DB}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_PORT: ${DB_PORT}
+    env_file:
+      - .env
+    networks:
+      - newsapi-network
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15.1
+    container_name: newsapi-db
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_PORT: ${DB_PORT}
+      POSTGRES_DB: ${DB}
+    env_file:
+      - .env
+    volumes:
+      - newsapi-pg-data:/var/lib/postgresql/data
+    networks:
+      - newsapi-network
+
+volumes:
+  newsapi-pg-data:
+
+networks:
+  newsapi-network:
