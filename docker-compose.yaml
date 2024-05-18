@@ -28,14 +28,18 @@ services:
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_PORT: ${DB_PORT}
       POSTGRES_DB: ${DB}
+    expose:
+      - '5434'
+    ports:
+      - '5434:5434'
     env_file:
       - .env
     volumes:
       - newsapi-pg-data:/var/lib/postgresql/data
     networks:
       - newsapi-network
+    command: -p 5434
 
 volumes:
   newsapi-pg-data:
