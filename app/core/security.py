@@ -3,13 +3,11 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from datetime import datetime, timedelta
 from typing import Optional
 from jose import jwt
-from passlib.context import CryptContext
+from passlib.hash import argon2
 
 from app.core.config import configs
 from app.core.exceptions import AuthError
 
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 ALGORITHM = "HS256"
 
@@ -28,11 +26,13 @@ def create_token(payload_data: dict, expires_delta: Optional[timedelta] = None):
 
 
 def hash_password(password: str):
-    return pwd_context.hash(password)
+    password_bytes = password.encode('utf-8')
+    return argon2.hash(password_bytes)
 
 
 def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
+    plain_password_bytes = plain_password.encode('utf-8')
+    return argon2.verify(plain_password_bytes, hashed_password)
 
 
 def decode_jwt(token: str):
