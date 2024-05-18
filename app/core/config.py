@@ -12,16 +12,6 @@ class Configs(BaseSettings):
     ENV: str = os.getenv("ENV", "dev")
     API: str = "/api"
     PROJECT_NAME: str = "News Aggregation API"
-    ENV_DATABASE_MAPPER: dict = {
-        "prod": "postgres",
-        "stage": "postgres",
-        "env": "postgres",
-        "test": "postgres",
-    }
-    DB_ENGINE_MAPPER: dict = {
-        "postgresql": "postgresql",
-        "mysql": "mysql+pymysql",
-    }
 
     PROJECT_ROOT: str = os.path.dirname(
         os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -40,7 +30,7 @@ class Configs(BaseSettings):
     DB_PASSWORD: str = os.getenv("DB_PASSWORD")
     DB_HOST: str = os.getenv("DB_HOST")
     DB_PORT: str = os.getenv("DB_PORT")
-    DB_ENGINE: str = DB_ENGINE_MAPPER.get(DB, "postgresql")
+    DB_ENGINE: str = "postgresql"
 
     DATABASE_URI_FORMAT: str = "{db_engine}://{user}:{password}@{host}:{port}/{database}"
 
@@ -50,7 +40,7 @@ class Configs(BaseSettings):
         password=DB_PASSWORD,
         host=DB_HOST,
         port=DB_PORT,
-        database=ENV_DATABASE_MAPPER[ENV],
+        database=DB,
     )
 
     # newsAPI
